@@ -1,18 +1,26 @@
-version: '3.9'
+version: "3.9"
 
 services:
-  db:
-    image: postgres:15
-    container_name: marketplace_db
-    restart: always
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: marketplace
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+    db:
+        image: postgres:15
+        container_name: marketplace_db
+        restart: always
+        environment:
+            POSTGRES_USER: admin
+            POSTGRES_PASSWORD: admin
+            POSTGRES_DB: marketplace
+        ports:
+            - "5432:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
 
 volumes:
-  postgres_data:
+    postgres_data:
+
+# Para ejecutar el contenedor, usa el siguiente comando en la terminal:
+# docker-compose up -d
+# Esto iniciará el contenedor de la base de datos PostgreSQL en segundo plano.
+# Para detener el contenedor, usa:
+# docker-compose down
+
+## docker exec -it marketplace_db psql -U admin -d marketplace

@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
+from uuid import UUID
 
 from app.domain.entities import Product
 
@@ -26,12 +27,12 @@ class ProductRepository(ABC):
         pass
 
     @abstractmethod
-    def get_by_id(self, product_id: int) -> Optional[Product]:
+    def get_by_id(self, product_id: UUID) -> Optional[Product]:
         """
         Obtiene un producto por su id.
         
         Args:
-            product_id: Identificador del producto.
+            product_id: Identificador del producto (UUID).
             
         Returns:
             Optional[Product]: El producto si existe, None si no.

@@ -34,7 +34,7 @@ class CreateProduct:
             ValueError: Si los datos no cumplen con las reglas de negocio.
         """
         # Crear la entidad de dominio (se valida en Product.__post_init__)
-        product = Product(name=name, price=price)
+        product = Product(name=name, price=price, stock=stock, user_id=user_id, category_id=category_id, description=description)
         
         # Persistir usando el repositorio inyectado
         created_product = self.repository.add(product)

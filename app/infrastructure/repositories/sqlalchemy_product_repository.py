@@ -1,4 +1,5 @@
 from typing import List, Optional
+from uuid import UUID
 
 from sqlalchemy.orm import Session
 
@@ -16,14 +17,14 @@ class SqlAlchemyProductRepository(ProductRepository):
     El dominio no conoce de su existencia.
     """
 
-    def __init__(self, session: Session = None):
+    def __init__(self, session_factory):
         """
         Inicializa el repositorio con una sesión de SQLAlchemy.
         
         Args:
             session: Sesión de SQLAlchemy. Si no se proporciona, se usa SessionLocal.
         """
-        self.session = session or SessionLocal()
+        self.session_factory = session_factory
 
     def add(self, product: Product) -> Product:
         """
@@ -35,33 +36,40 @@ class SqlAlchemyProductRepository(ProductRepository):
         Returns:
             Product: El producto con el id asignado por la BD.
         """
+        with self.session_factory() as session:
         # Convertir de entidad de dominio a modelo SQLAlchemy
-        db_product = ProductModel(
-            name=product.name,
-            price=product.price
-        )
+            db_product = ProductModel(
+                name=product.name,
+                price=product.price,
+                stock=product.stock,
+                user_id=product.user_id,
+                category_id=product.category_id,
+                description=product.description,
+                is_active=product.is_active
+            )
         
-        # Persistir
-        self.session.add(db_product)
-        self.session.commit()
-        self.session.refresh(db_product)
+            # Persistir
+            self.session.add(db_product)
+            self.session.commit()
+            self.session.refresh(db_product)
         
-        # Convertir de modelo SQLAlchemy de vuelta a entidad de dominio
-        return self._to_domain(db_product)
+            # Convertir de modelo SQLAlchemy de vuelta a entidad de dominio
+            return self._to_domain(db_product)
 
-    def get_by_id(self, product_id: int) -> Optional[Product]:
+    def get_by_id(self, product_id: UUID) -> Optional[Product]:
         """
         Obtiene un producto por su id.
         
         Args:
-            product_id: Identificador del producto.
+            product_id: Identificador del producto (UUID).
             
         Returns:
             Optional[Product]: La entidad de dominio si existe, None si no.
         """
-        db_product = self.session.query(ProductModel).filter(
-            ProductModel.id == product_id
-        ).first()
+        with self.session_factory() as session:
+            db_product = session.query(ProductModel).filter(
+                ProductModel.id == product_id
+            ).first()
         
         return self._to_domain(db_product) if db_product else None
 
@@ -88,5 +96,12 @@ class SqlAlchemyProductRepository(ProductRepository):
         return Product(
             id=db_product.id,
             name=db_product.name,
-            price=db_product.price
+            price=float(db_product.price),
+            stock=db_product.stock,
+            seller_id=db_product.seller_id,
+            category_id=db_product.category_id,
+            description=db_product.description,
+            is_active=db_product.is_active,
+            created_at=db_product.created_at,
+            updated_at=db_product.updated_at
         )
