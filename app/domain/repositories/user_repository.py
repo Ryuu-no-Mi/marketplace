@@ -27,4 +27,23 @@ class UserRepository(ABC):
         """Listar todos los usuarios."""
         pass
     
+    @abstractmethod
+    def get_active_users(self) -> List[User]:
+        """Listar usuarios activos."""
+        pass
+
+    @abstractmethod
+    def update(self, user: User) -> User:
+        """Actualizar usuario."""
+        pass
+
+    @abstractmethod
+    def delete(self, user_id: UUID) -> None:
+        """Eliminar usuario."""
+        pass
+
+    @abstractmethod
+    def to_domain(self, db_user) -> User:
+        """Convertir modelo de base de datos a entidad de dominio."""
+        pass
     

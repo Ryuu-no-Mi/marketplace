@@ -98,7 +98,7 @@ class SqlAlchemyProductRepository(ProductRepository):
             name=db_product.name,
             price=float(db_product.price),
             stock=db_product.stock,
-            seller_id=db_product.seller_id,
+            user_id=db_product.user_id,
             category_id=db_product.category_id,
             description=db_product.description,
             is_active=db_product.is_active,
