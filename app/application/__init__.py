@@ -1,1 +1,1 @@
-"""Application layer initialization."""
+# Application layer - contiene los casos de uso
