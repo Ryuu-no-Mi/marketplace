@@ -1,3 +1,4 @@
 from app.infrastructure.repositories.sqlalchemy_product_repository import SqlAlchemyProductRepository
+from app.infrastructure.repositories.sqlalchemy_user_repository import SqlAlchemyUserRepository
 
 __all__ = ["SqlAlchemyProductRepository", "SqlAlchemyUserRepository"]

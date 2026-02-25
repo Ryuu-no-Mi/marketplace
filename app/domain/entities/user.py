@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional
-from datetime impo1rt date, datetime
+from datetime import date, datetime
 from uuid import UUID
 
 
@@ -11,13 +11,13 @@ class User:
     No tiene dependencias de frameworks externos (FastAPI, SQLAlchemy).
     Solo tipos Python puros.
     """
-    id: Optional[UUID] = None
     email: str
     password_hash: str
     name: str
     last_name: str
     birth_date: date
     role: str
+    id: Optional[UUID] = None
     is_active: bool = True
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None

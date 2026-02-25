@@ -10,6 +10,7 @@ from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, N
 from sqlalchemy.dialects.postgresql import UUID
 from app.core.database import Base
 from datetime import datetime
+import uuid
 
 
 class UserModel(Base):
@@ -39,7 +40,7 @@ class ProductModel(Base):
     __tablename__ = "products"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
+    seller_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
     category_id = Column(UUID(as_uuid=True), ForeignKey("categories.id"), nullable=True)
     name = Column(String(150), nullable=False)
     description = Column(String(255), nullable=True)
