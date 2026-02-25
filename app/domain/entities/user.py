@@ -11,6 +11,7 @@ class User:
     No tiene dependencias de frameworks externos (FastAPI, SQLAlchemy).
     Solo tipos Python puros.
     """
+    id: Optional[UUID] = None
     email: str
     password_hash: str
     name: str
@@ -18,7 +19,6 @@ class User:
     birth_date: date
     role: str
     is_active: bool = True
-    id: Optional[UUID] = None
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
 
